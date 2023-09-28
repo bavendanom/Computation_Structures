@@ -64,9 +64,10 @@ int _write(int file, char *ptr, int len)
 	return len;
 }
 /* USER CODE END 0 */
-uint8_t Rx_data[10];
+uint8_t Rx_data[4];
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
+	HAL_GPIO_TogglePin (GPIOA,GPIO_PIN_5);
 	HAL_UART_Receive_IT(&huart2, Rx_data, 4); //restart the interrupt reception mode
 }
 /**
@@ -110,14 +111,19 @@ int main(void)
 
   for (uint8_t idx =0; idx <= 0x0f; idx++)
   	  printf("IDX: %d\r\n", idx);  // imprimir el str
+
   //uint8_t my_str[] ="Hello world!\r\n"; //definir un string
   //HAL_UART_Transmit(&huart2, my_str, sizeof(my_str)-1, 10);
   //HAL_UART_Transmit(&huart2, (uint8_t *)"hello world! \r \n", 14, 20);
+
+
   while (1)
   {
     /* USER CODE END WHILE */
-	HAL_GPIO_TogglePin (GPIOA,GPIO_PIN_5);
-	HAL_Delay (250);
+
+
+	//HAL_GPIO_TogglePin (GPIOA,GPIO_PIN_5);
+	//HAL_Delay (250);
 
     /* USER CODE BEGIN 3 */
   }
@@ -149,7 +155,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 1;
-  RCC_OscInitStruct.PLL.PLLN = 10;
+  RCC_OscInitStruct.PLL.PLLN = 8;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV7;
   RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
   RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
